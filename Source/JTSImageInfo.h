@@ -16,6 +16,7 @@
 @property (copy, nonatomic) NSURL *canonicalImageURL; // since `imageURL` might be a filesystem URL from the local cache.
 @property (copy, nonatomic) NSString *altText;
 @property (copy, nonatomic) NSString *title;
+@property (copy, nonatomic) NSString *editButtonTitle;
 @property (assign, nonatomic) CGRect referenceRect;
 @property (strong, nonatomic) UIView *referenceView;
 @property (assign, nonatomic) UIViewContentMode referenceContentMode;

@@ -45,12 +45,18 @@
     imageInfo.referenceView = self.bigImageButton.superview;
     imageInfo.referenceContentMode = self.bigImageButton.contentMode;
     imageInfo.referenceCornerRadius = self.bigImageButton.layer.cornerRadius;
+    imageInfo.editButtonTitle = @"  Edit Profile Photo  ";
     
     // Setup view controller
     JTSImageViewController *imageViewer = [[JTSImageViewController alloc]
                                            initWithImageInfo:imageInfo
                                            mode:JTSImageViewControllerMode_Image
                                            backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+    
+    __weak JTSImageViewController *imgViewer = imageViewer;
+    imgViewer.editButtonTappedHandler = ^{
+        [imgViewer dismiss:true];
+    };
     
     // Present the view controller.
     [imageViewer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];

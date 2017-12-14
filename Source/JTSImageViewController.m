@@ -99,6 +99,7 @@ typedef struct {
 @property (strong, nonatomic) UITextView *textView;
 @property (strong, nonatomic) UIProgressView *progressView;
 @property (strong, nonatomic) UIActivityIndicatorView *spinner;
+@property (strong, nonatomic) UIButton *editButton;
 
 // Gesture Recognizers
 @property (strong, nonatomic) UITapGestureRecognizer *singleTapperPhoto;
@@ -287,6 +288,35 @@ typedef struct {
     }
     else if (self.mode == JTSImageViewControllerMode_AltText) {
         [self viewDidLoadForAltTextMode];
+    }
+    
+    if (self.imageInfo.editButtonTitle) {
+        [self setupEditButtonWithTitle:self.imageInfo.editButtonTitle];
+    }
+}
+
+- (void)setupEditButtonWithTitle:(NSString *)editButtonTitle
+{
+    self.editButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.editButton setTitle:editButtonTitle forState:UIControlStateNormal];
+    self.editButton.titleLabel.font = [UIFont systemFontOfSize:15];
+    [self.editButton sizeToFit];
+    self.editButton.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.3];
+    self.editButton.layer.cornerRadius = self.editButton.bounds.size.height / 2;
+    self.editButton.layer.borderColor = [[UIColor whiteColor] CGColor];
+    self.editButton.layer.borderWidth = 2.0;
+    [self.editButton addTarget:self action:@selector(editButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.editButton];
+    
+    self.editButton.translatesAutoresizingMaskIntoConstraints = NO;
+    NSLayoutConstraint *horizontalConstraint = [NSLayoutConstraint constraintWithItem:self.editButton attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1 constant:0];
+    NSLayoutConstraint *verticalConstraint = [NSLayoutConstraint constraintWithItem:self.editButton attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeBottom multiplier:1 constant:-44];
+    [self.view addConstraints:@[horizontalConstraint, verticalConstraint]];
+}
+
+- (void)editButtonTapped:(id)sender {
+    if (self.editButtonTappedHandler) {
+        self.editButtonTappedHandler();
     }
 }
 

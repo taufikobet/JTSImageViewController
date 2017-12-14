@@ -63,6 +63,7 @@ extern CGFloat const JTSImageViewController_DefaultBackgroundBlurRadius;
 
 @property (weak, nonatomic, readwrite) id <JTSImageViewControllerAnimationDelegate> animationDelegate;
 
+@property (copy, nonatomic) void (^editButtonTappedHandler)(void);
 /**
  Designated initializer.
  
